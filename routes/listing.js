@@ -7,21 +7,12 @@ const Listing = require("../models/listing.js");
 
 //1
 const validateListing = (req, res, next) => {
-  console.log("=============================");
-  // console.log(req);
-  console.log("3333333333333333333333333333333");
-  console.log(req.body);
   let { error } = listingSchema.validate(req.body);
 
-  console.log("4444444444444444444444444444444");
   if (error) {
-    console.log("inside iffffffffffffff");
-    console.log(error);
-    console.log("Above is erroororororo");
     let errMsg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(400, errMsg);
   } else {
-    console.log("inside elseeee");
     next();
   }
 };
@@ -56,10 +47,7 @@ router.post(
   "/",
   validateListing,
   wrapAsync(async (req, res, next) => {
-    console.log("111111111111111111111111111");
-
     const newListing = new Listing(req.body.listing);
-    console.log("2222222222222222222222222222222");
     await newListing.save();
     res.redirect("/listings");
   })
