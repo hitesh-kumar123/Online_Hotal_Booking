@@ -303,3 +303,18 @@ body {
   font-size: 1rem;
 }
 /* **End of nav search button** */
+
+/* .logo {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  font-size: 36px;
+  color: #3498db;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px;
+  background: linear-gradient(to right, #3498db, #2980b9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+} */
