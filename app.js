@@ -51,9 +51,9 @@ const sessionOptions = {
   },
 };
 
-app.get("/", (req, res) => {
-  res.send("Hi, I am root user");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hi, I am root user");
+// });
 
 //Middelvaliouers
 app.use(session(sessionOptions));
