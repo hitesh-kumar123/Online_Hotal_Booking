@@ -8,6 +8,7 @@ router.get("/", (req, res) => {
   res.send("GET for users");
 });
 
+
 //show-users
 router.get("/:id", (req, res) => {
   res.send("GET for show user id");
