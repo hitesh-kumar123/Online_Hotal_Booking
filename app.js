@@ -1,7 +1,6 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -9,15 +8,39 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
-const session = require("express-session");
+const { log } = require("console");
+const session = require('express-session');
+// const MongoStore = require('connect-mongo');
 const flash = require("connect-flash");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
+const passport = require("passport"); 
+const LocalStrategy = require("passport-local");   
 const User = require("./models/user.js");
+const { isLoggedIn , validateReview, isReviewAuthor} = require("./middleware.js");
+const Review = require("./models/review.js");                                                                                         
+
+const Listing= require("./models/listing.js");
+const wrapAsync = require("./utils/wrapAsync.js");
+require('dotenv').config();
 
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+// const express = require("express");
+// const app = express();
+// const mongoose = require("mongoose");
+// const path = require("path");
+// const methodOverride = require("method-override");
+// const ejsMate = require("ejs-mate");
+// const ExpressError = require("./utils/ExpressError.js");
+// const session = require("express-session");
+// const flash = require("connect-flash");
+// const passport = require("passport");
+// const LocalStrategy = require("passport-local");
+// const User = require("./models/user.js");
+
+// const listingRouter = require("./routes/listing.js");
+// const reviewRouter = require("./routes/review.js");
+// const userRouter = require("./routes/user.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -87,6 +110,24 @@ app.use((req, res, next) => {
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+
+// Home page
+app.get("/", (req, res) => {
+  res.render("listings/home.ejs");
+});
+// Home page
+app.get("/home", (req, res) => {
+  res.render("listings/home.ejs");
+});
+// Book listing page
+app.get("/book", isLoggedIn, (req, res) => {
+  res.render("listings/book.ejs");
+});
+
+// Login Page
+app.get("/login", (req, res) => {
+  res.render("listings/login.ejs");
+});
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!"));
